@@ -4,3 +4,7 @@
 # python
 __pycache__/
 .python-version
+*.egg-info/
+
+# compiled
+*.png
