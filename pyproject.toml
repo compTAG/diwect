@@ -12,10 +12,12 @@ dependencies = [
     "medmnist",
     "numpy",
     "pandas",
+    "scikit-image",
     "scikit-learn",
     "scipy",
     "torch",
     "torchvision",
+    "trimesh",
 ]
 
 exclude = ["synthetic.rotation-invariance*"]
