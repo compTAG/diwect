@@ -10,8 +10,8 @@ exactly (with respect to directions). In other words, no direction sampling
 is required.
 
 As input, it accepts weighted simplicial complexes embedded in
-R^2 or R^3. This implementation reuses the height grid of pyECT's WECT computation,
-so that
+R^2 or R^3.
+This implementation reuses the height grid of pyECT's WECT computation, so that
     DIWECT(num_heights, normalize=True)(complex) ~= WECT(dirs, num_heights)(complex).mean(dim=0)
 for uniformly distributed `dirs`.
 """
@@ -217,6 +217,11 @@ def _support_measures_2d(pts: torch.Tensor, heights: torch.Tensor) -> torch.Tens
         e2 = pts[:, 2] - pts[:, 0]
         cw = (e1[:, 0] * e2[:, 1] - e1[:, 1] * e2[:, 0]) < 0
         pts = torch.where(cw[:, None, None], pts[:, [0, 2, 1]], pts)
+    elif d1 > 3:
+        # enforce CCW orientation
+        rel = pts - pts.mean(dim=1, keepdim=True)
+        order = torch.atan2(rel[..., 1], rel[..., 0]).argsort(dim=1)
+        pts = torch.gather(pts, 1, order.unsqueeze(-1).expand_as(pts))
 
     # witness arc of vertex a, with (a, b, c) the vertices in CCW order
     # (b = c for an edge): S^1_sigma(a) = [(c - a)^perp, (a - b)^perp]
