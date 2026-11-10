@@ -17,10 +17,13 @@ for uniformly distributed `dirs`.
 """
 
 import math
-from typing import List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import torch
 
+# Default chunk sizes calibrated on a T4. You may wish to pass in a chunk_size
+# param specific to your own compute environmnet
+DEFAULT_CHUNK_SIZE: Dict[int, int] = {2: 1 << 22, 3: 1 << 20}
 
 
 class DIWECT(torch.nn.Module):
@@ -36,7 +39,7 @@ class DIWECT(torch.nn.Module):
         num_heights: int,
         normalize: bool = False,
         dtype: torch.dtype = torch.float64,
-        chunk_size: int = 1 << 18,
+        chunk_size: Optional[int] = None,
     ) -> None:
         """
         Initializes the DIWECT module.
@@ -51,8 +54,7 @@ class DIWECT(torch.nn.Module):
                 float64 is recommended (use float32 on devices without float64,
                 such as MPS).
             chunk_size: Maximum number of (simplex, vertex, height) triples
-                processed at once in R^3; bounds peak memory usage (roughly
-                1.5 KB per triple in float64, so ~400 MB at the default).
+                processed at once to bounds peak memory usage
         """
         super().__init__()
         num_heights = int(num_heights)
@@ -61,7 +63,7 @@ class DIWECT(torch.nn.Module):
         self.num_heights: int = num_heights
         self.normalize: bool = bool(normalize)
         self.dtype: torch.dtype = dtype
-        self.chunk_size: int = int(chunk_size)
+        self.chunk_size: Optional[int] = None if chunk_size is None else int(chunk_size)
         self.eps: float = float(torch.finfo(dtype).eps)
 
     @torch.jit.export
@@ -126,6 +128,7 @@ class DIWECT(torch.nn.Module):
 
         # extract heights from vertex coordinates
         heights = self.heights(v_coords)
+        chunk_size = self.chunk_size if self.chunk_size is not None else DEFAULT_CHUNK_SIZE[n]
 
         # iterate over complex dimensions, transforming to proper device + dtype
         for i in range(len(complex_data)):
@@ -137,15 +140,17 @@ class DIWECT(torch.nn.Module):
             if simp_verts.size(0) == 0:
                 continue
 
-            # (k_i, i+1, n) vertex coordinates of each i-simplex
-            pts = v_coords[simp_verts]
-            if n == 2:
-                measures = _support_measures_2d(pts, heights)
-            else:
-                measures = _support_measures_3d(pts, heights, self.eps, self.chunk_size)
-
-            # add (-1)^i * sum_sigma w(sigma) mu(A_sigma(t)).
-            diwect = diwect + (-1) ** i * (simp_weights @ measures)
+            # add components in chunks of at most chunk_size
+            # (simplex, vertex, height)
+            per_chunk = max(1, chunk_size // (simp_verts.size(1) * heights.size(0)))
+            for start in range(0, simp_verts.size(0), per_chunk):
+                # (k, i+1, n) vertex coordinates of each i-simplex in the chunk
+                pts = v_coords[simp_verts[start:start + per_chunk]]
+                if n == 2:
+                    measures = _support_measures_2d(pts, heights)
+                else:
+                    measures = _support_measures_3d(pts, heights, self.eps)
+                diwect = diwect + (-1) ** i * (simp_weights[start:start + per_chunk] @ measures)
 
         if self.normalize:
             diwect = diwect / ((2.0 * math.pi) if n == 2 else (4.0 * math.pi))
@@ -388,7 +393,7 @@ def _cap_region_areas(
     return torch.where(opposite, torch.zeros_like(area), area)
 
 
-def _support_measures_3d_chunk(
+def _support_measures_3d(
     pts: torch.Tensor, heights: torch.Tensor, eps: float
 ) -> torch.Tensor:
     """mu(A_sigma(t)) for simplices pts (k, d+1, 3) and heights (H) -> (k, H)
@@ -432,20 +437,3 @@ def _support_measures_3d_chunk(
     at_origin = torch.where(heights >= 0, witness.unsqueeze(-1), torch.zeros_like(cap_area))
     contribution = torch.where((v_norm > 0).unsqueeze(-1), contribution, at_origin)
     return contribution.sum(dim=1)
-
-
-def _support_measures_3d(
-    pts: torch.Tensor, heights: torch.Tensor, eps: float, chunk_size: int
-) -> torch.Tensor:
-    """mu(A_sigma(t)) for simplices pts (k, d+1, 3) and heights (H) -> (k, H).
-
-    TODO: link to releveant theorem/lemma in paper.
-
-    Simplices are processed in chunks of at most chunk_size (simplex, vertex,
-    height) tuples to bound memory usage 
-    """
-    per_chunk = max(1, chunk_size // (pts.size(1) * heights.size(0)))
-    measures: List[torch.Tensor] = []
-    for start in range(0, pts.size(0), per_chunk):
-        measures.append(_support_measures_3d_chunk(pts[start:start + per_chunk], heights, eps))
-    return torch.cat(measures)
