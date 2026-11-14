@@ -4,13 +4,24 @@ Euler Characteristic Transform (DIWECT).
 It is based on many coventions established in the pyECT project, see:
 https://github.com/compTAG/pyect.
 
-This implementation computes the DIWECT
+Throughout, we reference Definitions, Theorems, Lemmas, etc. from the paper
+An Omnidirectional WECT: Closed-Form Computation of the Directionally-Integrated
+Weighted Euler Characteristic Transform.
+We also use notation following the paper:
+    N(v)            the normalized vector (Definition 11)
+    r_v(t)          the geodesic radius of the cap of v at height t (Definition 13)
+    c = -N(v)       the centre of that cap
+    B_r(c)          the closed spherical cap (Definition 12)
+    A_sigma(t)      the support of sigma at height t (Definition 8)
+    S^n_sigma(v)    the vertex witness region of v in sigma (Definition 9)
+    mu              arclength on S^1, area on S^2
+
+This implementation computes the DIWECT (Definition 6, DIWECT)
     DIWECT_K(t) = int_{s in S^n} WECT_K(s, t) ds
 exactly (with respect to directions). In other words, no direction sampling
 is required.
 
-As input, it accepts weighted simplicial complexes embedded in
-R^2 or R^3.
+As input, it accepts weighted simplicial complexes in R^2 or R^3.
 This implementation reuses the height grid of pyECT's WECT computation, so that
     DIWECT(num_heights, normalize=True)(complex) ~= WECT(dirs, num_heights)(complex).mean(dim=0)
 for uniformly distributed `dirs`.
@@ -88,7 +99,12 @@ class DIWECT(torch.nn.Module):
         complex_data: List[Tuple[torch.Tensor, torch.Tensor]],
     ) -> torch.Tensor:
         """
-        Calculates the DIWECT of a complex embedded in R^2 or R^3.
+        Calculates the DIWECT of a complex in R^2 or R^3.
+
+        By Theorem 15 (first equality, from Equations (4) and (6)),
+            DIWECT_K(t) = sum_{sigma in K} (-1)^{dim sigma} omega(sigma) mu(A_sigma(t)),
+        so this sums the weighted support measures mu(A_sigma(t)) of every
+        simplex, computed by _support_measures_2d or _support_measures_3d.
 
         Args:
             complex_data: A weighted simplicial complex, represented as a list of pairs of tensors.
@@ -140,8 +156,8 @@ class DIWECT(torch.nn.Module):
             if simp_verts.size(0) == 0:
                 continue
 
-            # add components in chunks of at most chunk_size
-            # (simplex, vertex, height)
+            # add (-1)^i omega(sigma) mu(A_sigma(t)) (Theorem 15), in chunks
+            # of at most chunk_size (simplex, vertex, height) triples
             per_chunk = max(1, chunk_size // (simp_verts.size(1) * heights.size(0)))
             for start in range(0, simp_verts.size(0), per_chunk):
                 # (k, i+1, n) vertex coordinates of each i-simplex in the chunk
@@ -163,7 +179,10 @@ class DIWECT(torch.nn.Module):
 
 
 def _normalized(v: torch.Tensor) -> torch.Tensor:
-    """The map N: R^{n+1} -> S^n along the last dimension (zero maps to e_0)"""
+    """The map N: R^{n+1} -> S^n along the last dimension (zero maps to e_0).
+
+    See Definition 11 (Normalized Vector).
+    """
     norm = torch.linalg.vector_norm(v, dim=-1, keepdim=True)
     e0 = torch.zeros_like(v)
     e0[..., 0] = 1.0
@@ -171,7 +190,10 @@ def _normalized(v: torch.Tensor) -> torch.Tensor:
 
 
 def _radius(v_norm: torch.Tensor, heights: torch.Tensor) -> torch.Tensor:
-    """r_v(t) for every vertex norm in v_norm (...) and t in heights (H) -> (..., H)"""
+    """r_v(t) for every vertex norm in v_norm (...) and t in heights (H) -> (..., H).
+
+    See Definition 13 (Geodesic Radius of Spherical Cap)
+    """
     v_norm = v_norm.unsqueeze(-1)
     safe_norm = torch.where(v_norm > 0, v_norm, torch.ones_like(v_norm))
     r = torch.acos(torch.clamp(-heights / safe_norm, -1.0, 1.0))
@@ -182,19 +204,20 @@ def _radius(v_norm: torch.Tensor, heights: torch.Tensor) -> torch.Tensor:
 
 
 # ---------------------------------------------------------------------------
-# The DIWECT in two dimension
+# The DIWECT in two dimensions
+# (Section 3.3, Computing the DIWECT in Two Dimensions)
 # ---------------------------------------------------------------------------
 
 
 def _perp(u: torch.Tensor) -> torch.Tensor:
-    """u rotated 90 degrees counter-clockwise"""
+    """u rotated 90 degrees counter-clockwise (see Equation (8))"""
     return torch.stack([-u[..., 1], u[..., 0]], dim=-1)
 
 
 def _signed_angle(u: torch.Tensor, v: torch.Tensor) -> torch.Tensor:
     """delta(u, v) = atan2(u ^ v, u . v), with range (-pi, pi]
-    
-    TODO: link to releveant definition in paper.
+
+    See Definition 17 (Signed Angle)
     """
     angel = torch.atan2(
         u[..., 0] * v[..., 1] - u[..., 1] * v[..., 0], (u * v).sum(dim=-1)
@@ -205,13 +228,14 @@ def _signed_angle(u: torch.Tensor, v: torch.Tensor) -> torch.Tensor:
 
 
 def _sgn(x: torch.Tensor) -> torch.Tensor:
+    """sgn(x) = 1 if x >= 0, else -1. See Definition 18."""
     return torch.where(x >= 0, torch.ones_like(x), -torch.ones_like(x))
 
 
 def _support_measures_2d(pts: torch.Tensor, heights: torch.Tensor) -> torch.Tensor:
     """mu(A_sigma(t)) for simplices pts (k, d+1, 2) and heights (H) -> (k, H)
-    
-    TODO: link to releveant theorem/lemma in paper.
+
+    See Theorem 15 and Lemma 19.
     """
     d1 = pts.size(1)
     if d1 == 1:
@@ -228,28 +252,31 @@ def _support_measures_2d(pts: torch.Tensor, heights: torch.Tensor) -> torch.Tens
         order = torch.atan2(rel[..., 1], rel[..., 0]).argsort(dim=1)
         pts = torch.gather(pts, 1, order.unsqueeze(-1).expand_as(pts))
 
-    # witness arc of vertex a, with (a, b, c) the vertices in CCW order
-    # (b = c for an edge): S^1_sigma(a) = [(c - a)^perp, (a - b)^perp]
-    b = torch.roll(pts, -1, dims=1)
-    c = torch.roll(pts, 1, dims=1)
-    u0 = _perp(c - pts)
-    u1 = _perp(pts - b)
-    center = -_normalized(pts)
+    # witness arc of vertex v, with (v, next, prev) the vertices in CCW order
+    # See Equations (8) and (9)
+    nxt = torch.roll(pts, -1, dims=1)
+    prev = torch.roll(pts, 1, dims=1)
+    u0 = _perp(prev - pts)
+    u1 = _perp(pts - nxt)
+    center = -_normalized(pts)  # c = -N(v)
 
+    # Lemma 19 with s = c, alpha = delta(u0, c), beta = delta(c, u1)
     alpha = _signed_angle(u0, center).unsqueeze(-1)
     beta = _signed_angle(center, u1).unsqueeze(-1)
     r = _radius(torch.linalg.vector_norm(pts, dim=-1), heights)
-    sgn_a, sng_b = _sgn(alpha), _sgn(beta)
+    sgn_a, sgn_b = _sgn(alpha), _sgn(beta)
     measure = (
         sgn_a * torch.minimum(r, alpha.abs())
-        + sng_b * torch.minimum(r, beta.abs())
-        + 0.5 * r * (1.0 - sgn_a) * (1.0 - sng_b)
+        + sgn_b * torch.minimum(r, beta.abs())
+        + 0.5 * r * (1.0 - sgn_a) * (1.0 - sgn_b)
     )
+    # sum over v in sigma (Theorem 15)
     return measure.sum(dim=1)
 
 
 # ---------------------------------------------------------------------------
-# The DIWECT in there dimensions
+# The DIWECT in three dimensions
+# (Section 3.4, Computing the DIWECT in Three Dimensions)
 # ---------------------------------------------------------------------------
 
 
@@ -278,7 +305,8 @@ def _cap_region_areas(
 ) -> torch.Tensor:
     """Areas of R = B(c) cap S^2_sigma(v) with cap B(c) = {s : c . s >= b}, c = sign * v_hat.
 
-    TODO: link to releveant theorem/lemma in paper.
+    
+    See Lemmas 22, 23, and 26 and Corollary 24. The degenerate cases follow from Lemma 26.
 
     This implementation was inspired by the geographiclib-rs implementation:
     https://github.com/georust/geographiclib-rs/blob/c5e906d94a4664b5be160eb03f89e76b15cc5ece/src/geodesic.rs#L541.
@@ -305,7 +333,7 @@ def _cap_region_areas(
     # ---- PER (simplex, vertex), independent of height ----
     # great circle j has frame (e1_j, e2_j, n_j) adn v_hat projects onto it with
     # length amp_j = sqrt(1 - (v_hat . n_j)^2) in direction phi_v_j
-    # TODO: link to releveant theorem/lemma in paper.
+    # see Lemma 22
     e1, e2 = _frames(normals)
     g1 = (v_hat.unsqueeze(2) * e1).sum(dim=-1)
     g2 = (v_hat.unsqueeze(2) * e2).sum(dim=-1)
@@ -316,7 +344,6 @@ def _cap_region_areas(
     # hemisphere l restricted to great circle j is the semicircle centred at psi_jl.
     # Relative to the direction of the cap centre on circle j,
     # the intersection of these semicircles is the interval [lo, hi]
-    # TODO: link to releveant theorem/lemma in paper
     l_cos = e1 @ normals.transpose(-1, -2)  # (k, d+1, j, l) = e1_j \cdot n_l
     l_sin = e2 @ normals.transpose(-1, -2)
     psi = torch.atan2(l_sin, l_cos)
@@ -331,7 +358,7 @@ def _cap_region_areas(
 
     # for cap circle (f1, sign * f2, c), hemisphere j cuts it at an arc
     # centred at angle p0_j
-    # TODO: link to releveant theorem/lemma in paper.
+    # see Lemma 31
     f1, f2 = _frames(v_hat)
     a_j = (normals * f1.unsqueeze(2)).sum(dim=-1)
     b_j = (normals * f2.unsqueeze(2)).sum(dim=-1)
@@ -348,7 +375,7 @@ def _cap_region_areas(
 
     # for great-circle arcs, the cap meets circle j in the interval [-h, h] around
     # the cap centre's direction (cos(h) = b / amp), intersected with [lo, hi].
-    # TODO: link to releveant theorem/lemma in paper.
+    # see Lemmas 22 and 23
     reaches = (amp_h > tol) & (bb < amp_h)
     half = torch.acos(torch.clamp(bb / torch.where(amp_h > tol, amp_h, torch.ones_like(amp_h)), -1.0, 1.0))
     lo = torch.maximum(-half, lo_other)
@@ -359,13 +386,9 @@ def _cap_region_areas(
         torch.cos(0.5 * delta) + amp_h * torch.cos(0.5 * (lo + hi)),
     ).sum(dim=-1)
 
-    # for cap-circle arcs, n_j \cdot p(phi) = b gamma_j + rho amp_j cos(phi - p0_j), so
-    # p is in H_{n_j} iff cos(phi - p0_j) >= ratio_j.  beta is the measure of
-    # the intersection of these arcs: split the circle at all crossings and
-    # test the midpoint of every sub-arc
-    # TODO: link to releveant theorem/lemma in paper.
-    rho = torch.sqrt(torch.clamp(1.0 - b * b, min=0.0)).unsqueeze(-1)
-    denom = rho * amp_h
+    # for cap-circle arcs: see Lemmas 29, 30, and 31
+    sin_r = torch.sqrt(torch.clamp(1.0 - b * b, min=0.0)).unsqueeze(-1)
+    denom = sin_r * amp_h
     has_amp = denom > tol
     ratio = -bb * gamma / torch.where(has_amp, denom, torch.ones_like(denom))
     crosses = has_amp & (ratio.abs() < 1.0)
@@ -383,12 +406,11 @@ def _cap_region_areas(
         & (torch.cos(mids.unsqueeze(-1) - p0.unsqueeze(-2)) >= ratio.unsqueeze(-2) - feasible_tol),
         (bb * gamma >= -feasible_tol).unsqueeze(-2),
     ).all(dim=-1)
-    beta = ((ends - starts) * inside).sum(dim=-1)
+    cap_arc = ((ends - starts) * inside).sum(dim=-1)
 
-    area = torch.clamp((1.0 - b) * beta + great, 0.0, 4.0 * pi)
-    # a cap whose boundary is the great circle of an opposite hemisphere
-    # (b = 0, c = -n_j) meets the witness region in a null set,
-    # so we have to handle this degeneracy
+    # Corollaries 24 and 25
+    area = torch.clamp((1.0 - b) * cap_arc + great, 0.0, 4.0 * pi)
+    # see Lemma 26
     opposite = ((gamma < 0) & (amp_h <= tol) & (bb < tol)).any(dim=-1)
     return torch.where(opposite, torch.zeros_like(area), area)
 
@@ -397,8 +419,8 @@ def _support_measures_3d(
     pts: torch.Tensor, heights: torch.Tensor, eps: float
 ) -> torch.Tensor:
     """mu(A_sigma(t)) for simplices pts (k, d+1, 3) and heights (H) -> (k, H)
-    
-    TODO: link to releveant theorem/lemma in paper.
+
+    See Theorem 15 and Definition 20
     """
     d1 = pts.size(1)
     v_norm = torch.linalg.vector_norm(pts, dim=-1)  # (k, d+1)
@@ -407,7 +429,6 @@ def _support_measures_3d(
     # small-cap reduction: for t <= 0 the cap {v . s <= t} = B_r(-N(v)); for
     # t > 0 use the complement cap {v \cdot s >= t} = B_{pi - r}(N(v)).
     # Both have the form {c \cdot s >= b} with c = sgn(t) N(v) and b = |t| / |v| (<= 1)
-    # TODO: link to releveant theorem/lemma in paper.
     safe_norm = torch.where(v_norm > 0, v_norm, torch.ones_like(v_norm))
     b = torch.clamp(heights.abs() / safe_norm.unsqueeze(-1), max=1.0)  # (k, d+1, H)
     below = heights <= 0
@@ -415,10 +436,12 @@ def _support_measures_3d(
 
     if d1 == 1:
         # vertex case: the witness region is the whole sphere and R is the cap
+        # see Lemma 10
         witness = torch.full_like(v_norm, 4.0 * math.pi)
         cap_area = 2.0 * math.pi * (1.0 - b)
     else:
         # otherwise, witness region S^2_sigma(v) = intersection of hemispheres H_{N(v - w)}
+        # see Definition 9
         steps = torch.arange(d1, device=pts.device)
         others = (steps.unsqueeze(1) + 1 + steps[: d1 - 1].unsqueeze(0)) % d1 # the indices of the vertices other than i
         normals = _normalized(pts.unsqueeze(2) - pts[:, others])  # (k, d+1, d, 3)
@@ -430,6 +453,7 @@ def _support_measures_3d(
         ).sum(dim=-1)
 
     # filter to final contribution
+    # see lemmas 14 and 26
     cap_area = torch.where(
         (v_norm > 0).unsqueeze(-1) & (b < 1.0 - eps ** 0.4), cap_area, torch.zeros_like(cap_area)
     )
