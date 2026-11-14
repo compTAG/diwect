@@ -1,0 +1,6 @@
+# Dryad archives and extracted scans (00-data-barley.ipynb)
+data/raw/
+# local benchmark runs (05b-05d)
+runs/
+__pycache__/
+.ipynb_checkpoints/

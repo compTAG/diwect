@@ -1,0 +1,18 @@
+# Python 3.11. Versions used for the paper's runs (the Colab benchmarks used
+# Colab's own torch 2.14.1 with `pip install --no-deps pyect trimesh`).
+numpy==2.4.6
+pandas==3.0.5
+scipy==1.17.1
+scikit-learn==1.9.1
+scikit-image==0.26.0
+matplotlib==3.11.1
+pillow==12.3.0
+torch==2.14.0
+torchvision==0.29.0
+pyect==1.0.1
+trimesh==5.1.0          # imported by pyect
+tifffile==2026.3.3
+joblib==1.6.0
+umap-learn==0.5.12      # 04b only
+# to open and run the notebooks (any recent version)
+jupyter
