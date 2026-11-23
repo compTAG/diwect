@@ -1,4 +1,4 @@
-# diwect-vs-wect
+# diwect
 
 Experiments for the ongoing work:
 _An Omnidirectional WECT: Closed-Form Computation of the Directionally-Integrated Weighted Euler Characteristic Transform_.
