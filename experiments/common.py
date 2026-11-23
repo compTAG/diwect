@@ -73,6 +73,42 @@ def bar_labels(ax, bars, fmt="{:.2f}", fontsize=7.5, padding=2):
                  padding=padding, fontsize=fontsize)
 
 
+def box_plot(ax, samples, positions, colors, width=0.6, alpha=1.0, vert=True, points=True,
+             ink="#222222", seed=0):
+    bp = ax.boxplot(samples, positions=positions, widths=width, orientation="vertical" if vert else "horizontal",
+                    patch_artist=True, showfliers=not points, manage_ticks=False,
+                    medianprops=dict(color=ink, lw=1.4), whiskerprops=dict(color=ink, lw=0.8),
+                    capprops=dict(color=ink, lw=0.8),
+                    flierprops=dict(marker="o", ms=2.5, mfc="none", mec=ink, mew=0.6),
+                    boxprops=dict(edgecolor=ink, lw=0.8))
+    span = np.ptp(np.concatenate([np.asarray(v, float) for v in samples])) or 1.0
+    for patch, med, c, vals in zip(bp["boxes"], bp["medians"], colors, samples):
+        rgba = mpl.colors.to_rgba(c, alpha)
+        patch.set_facecolor(rgba)
+        # the median must stay visible on its fill: white on dark fills, ink on light ones;
+        # a box too thin to show fill around a white line keeps the ink median
+        r, g, b = (alpha * np.array(rgba[:3]) + (1 - alpha))   # composited on white
+        q1, q3 = np.percentile(vals, [25, 75])
+        if 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.38 and (q3 - q1) > 0.03 * span:
+            med.set_color("white")
+    if points:
+        rng = np.random.default_rng(seed)
+        for pos, vals in zip(positions, samples):
+            vals = np.asarray(vals)
+            jit = pos + rng.uniform(-0.18, 0.18, len(vals)) * width
+            xy = (jit, vals) if vert else (vals, jit)
+            ax.scatter(*xy, s=6, color=ink, alpha=0.7, lw=0, zorder=3)
+    return bp
+
+
+def median_labels(ax, samples, positions, fmt="{:.2f}", fontsize=7.5, pad=0.015):
+    """Write each box's median just above its highest sample (vertical boxes)."""
+    for pos, vals in zip(positions, samples):
+        vals = np.asarray(vals)
+        top = vals.max()
+        ax.annotate(fmt.format(np.median(vals)), (pos, top + pad), ha="center", va="bottom", fontsize=fontsize)
+
+
 def chance_line(ax, n_classes, text="chance"):
     ax.axhline(1.0 / n_classes, ls="--", lw=1, color="k", zorder=0)
     ax.annotate(text, xy=(0.995, 1.0 / n_classes), xycoords=("axes fraction", "data"),
