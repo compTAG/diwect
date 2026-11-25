@@ -1,0 +1,521 @@
+features,group,pose,split,repeat,accuracy
+DIWECT,,DIWECT,seed,0,0.38431876606683807
+DIWECT,,DIWECT,seed,1,0.40359897172236503
+DIWECT,,DIWECT,seed,2,0.40102827763496146
+DIWECT,,DIWECT,seed,3,0.38946015424164526
+DIWECT,,DIWECT,seed,4,0.3856041131105398
+DIWECT,,DIWECT,seed,5,0.35989717223650386
+DIWECT,,DIWECT,seed,6,0.37146529562982006
+DIWECT,,DIWECT,seed,7,0.38174807197943444
+DIWECT,,DIWECT,seed,8,0.397172236503856
+DIWECT,,DIWECT,seed,9,0.4087403598971722
+DIWECT,,DIWECT,seed,10,0.40488431876606684
+DIWECT,,DIWECT,seed,11,0.3856041131105398
+DIWECT,,DIWECT,seed,12,0.38303341902313626
+DIWECT,,DIWECT,seed,13,0.39588688946015427
+DIWECT,,DIWECT,seed,14,0.39974293059125965
+DIWECT,,DIWECT,seed,15,0.37532133676092544
+DIWECT,,DIWECT,seed,16,0.397172236503856
+DIWECT,,DIWECT,seed,17,0.39203084832904883
+DIWECT,,DIWECT,seed,18,0.3856041131105398
+DIWECT,,DIWECT,seed,19,0.39203084832904883
+DIWECT,,DIWECT,spike,0,0.20954162768942938
+DIWECT,,DIWECT,spike,1,0.21758436944937834
+DIWECT,,DIWECT,spike,2,0.2097069597069597
+DIWECT,,DIWECT,spike,3,0.24582560296846012
+DIWECT,,DIWECT,spike,4,0.23271665043816941
+DIWECT,,DIWECT,spike,5,0.22134733158355205
+DIWECT,,DIWECT,spike,6,0.24209575429087624
+DIWECT,,DIWECT,spike,7,0.22495446265938068
+DIWECT,,DIWECT,spike,8,0.2506938020351526
+DIWECT,,DIWECT,spike,9,0.24299909665763325
+DIWECT,,DIWECT,spike,10,0.21037463976945245
+DIWECT,,DIWECT,spike,11,0.23106423777564716
+DIWECT,,DIWECT,spike,12,0.2690909090909091
+DIWECT,,DIWECT,spike,13,0.2597898758357211
+DIWECT,,DIWECT,spike,14,0.28363636363636363
+DIWECT,,DIWECT,spike,15,0.2262135922330097
+DIWECT,,DIWECT,spike,16,0.2702439024390244
+DIWECT,,DIWECT,spike,17,0.23417085427135678
+DIWECT,,DIWECT,spike,18,0.2407231208372978
+DIWECT,,DIWECT,spike,19,0.23047619047619047
+WECT,exact frame,paper's frame,seed,0,0.4601542416452442
+WECT,exact frame,paper's frame,seed,1,0.46272493573264784
+WECT,exact frame,paper's frame,seed,2,0.4537275064267352
+WECT,exact frame,paper's frame,seed,3,0.43444730077120824
+WECT,exact frame,paper's frame,seed,4,0.4498714652956298
+WECT,exact frame,paper's frame,seed,5,0.4190231362467866
+WECT,exact frame,paper's frame,seed,6,0.44473007712082263
+WECT,exact frame,paper's frame,seed,7,0.4370179948586118
+WECT,exact frame,paper's frame,seed,8,0.44601542416452444
+WECT,exact frame,paper's frame,seed,9,0.44473007712082263
+WECT,exact frame,paper's frame,seed,10,0.4473007712082262
+WECT,exact frame,paper's frame,seed,11,0.4691516709511568
+WECT,exact frame,paper's frame,seed,12,0.45629820051413883
+WECT,exact frame,paper's frame,seed,13,0.45115681233933164
+WECT,exact frame,paper's frame,seed,14,0.44601542416452444
+WECT,exact frame,paper's frame,seed,15,0.442159383033419
+WECT,exact frame,paper's frame,seed,16,0.4305912596401028
+WECT,exact frame,paper's frame,seed,17,0.43573264781491
+WECT,exact frame,paper's frame,seed,18,0.44473007712082263
+WECT,exact frame,paper's frame,seed,19,0.4473007712082262
+WECT,exact frame,paper's frame,spike,0,0.2291861552853134
+WECT,exact frame,paper's frame,spike,1,0.2966252220248668
+WECT,exact frame,paper's frame,spike,2,0.21886446886446886
+WECT,exact frame,paper's frame,spike,3,0.2625231910946197
+WECT,exact frame,paper's frame,spike,4,0.2765335929892892
+WECT,exact frame,paper's frame,spike,5,0.2887139107611549
+WECT,exact frame,paper's frame,spike,6,0.25022583559168926
+WECT,exact frame,paper's frame,spike,7,0.25318761384335153
+WECT,exact frame,paper's frame,spike,8,0.2738205365402405
+WECT,exact frame,paper's frame,spike,9,0.25112917795844625
+WECT,exact frame,paper's frame,spike,10,0.23823246878001922
+WECT,exact frame,paper's frame,spike,11,0.2665388302972196
+WECT,exact frame,paper's frame,spike,12,0.2909090909090909
+WECT,exact frame,paper's frame,spike,13,0.2702960840496657
+WECT,exact frame,paper's frame,spike,14,0.28
+WECT,exact frame,paper's frame,spike,15,0.23106796116504855
+WECT,exact frame,paper's frame,spike,16,0.3024390243902439
+WECT,exact frame,paper's frame,spike,17,0.3005025125628141
+WECT,exact frame,paper's frame,spike,18,0.24738344433872503
+WECT,exact frame,paper's frame,spike,19,0.23809523809523808
+WECT,rotation error,+2°,seed,0,0.38174807197943444
+WECT,rotation error,+2°,seed,1,0.39331619537275064
+WECT,rotation error,+2°,seed,2,0.3856041131105398
+WECT,rotation error,+2°,seed,3,0.39845758354755784
+WECT,rotation error,+2°,seed,4,0.4087403598971722
+WECT,rotation error,+2°,seed,5,0.38431876606683807
+WECT,rotation error,+2°,seed,6,0.41259640102827766
+WECT,rotation error,+2°,seed,7,0.36889460154241643
+WECT,rotation error,+2°,seed,8,0.38688946015424164
+WECT,rotation error,+2°,seed,9,0.38431876606683807
+WECT,rotation error,+2°,seed,10,0.4074550128534704
+WECT,rotation error,+2°,seed,11,0.4074550128534704
+WECT,rotation error,+2°,seed,12,0.41002570694087404
+WECT,rotation error,+2°,seed,13,0.37146529562982006
+WECT,rotation error,+2°,seed,14,0.397172236503856
+WECT,rotation error,+2°,seed,15,0.36503856041131105
+WECT,rotation error,+2°,seed,16,0.38946015424164526
+WECT,rotation error,+2°,seed,17,0.41002570694087404
+WECT,rotation error,+2°,seed,18,0.36632390745501286
+WECT,rotation error,+2°,seed,19,0.38431876606683807
+WECT,rotation error,+2°,spike,0,0.23666978484565013
+WECT,rotation error,+2°,spike,1,0.2557726465364121
+WECT,rotation error,+2°,spike,2,0.21611721611721613
+WECT,rotation error,+2°,spike,3,0.24025974025974026
+WECT,rotation error,+2°,spike,4,0.24148003894839337
+WECT,rotation error,+2°,spike,5,0.2554680664916885
+WECT,rotation error,+2°,spike,6,0.22673893405600723
+WECT,rotation error,+2°,spike,7,0.23406193078324225
+WECT,rotation error,+2°,spike,8,0.2590194264569843
+WECT,rotation error,+2°,spike,9,0.23938572719060525
+WECT,rotation error,+2°,spike,10,0.2228626320845341
+WECT,rotation error,+2°,spike,11,0.2348993288590604
+WECT,rotation error,+2°,spike,12,0.28
+WECT,rotation error,+2°,spike,13,0.2559694364851958
+WECT,rotation error,+2°,spike,14,0.24
+WECT,rotation error,+2°,spike,15,0.2029126213592233
+WECT,rotation error,+2°,spike,16,0.2839024390243902
+WECT,rotation error,+2°,spike,17,0.2693467336683417
+WECT,rotation error,+2°,spike,18,0.23501427212178877
+WECT,rotation error,+2°,spike,19,0.22
+WECT,rotation error,+5°,seed,0,0.3149100257069409
+WECT,rotation error,+5°,seed,1,0.3277634961439589
+WECT,rotation error,+5°,seed,2,0.30719794344473006
+WECT,rotation error,+5°,seed,3,0.3496143958868895
+WECT,rotation error,+5°,seed,4,0.2943444730077121
+WECT,rotation error,+5°,seed,5,0.30719794344473006
+WECT,rotation error,+5°,seed,6,0.3149100257069409
+WECT,rotation error,+5°,seed,7,0.29562982005141386
+WECT,rotation error,+5°,seed,8,0.3226221079691517
+WECT,rotation error,+5°,seed,9,0.2969151670951157
+WECT,rotation error,+5°,seed,10,0.32904884318766064
+WECT,rotation error,+5°,seed,11,0.34318766066838047
+WECT,rotation error,+5°,seed,12,0.3110539845758355
+WECT,rotation error,+5°,seed,13,0.2969151670951157
+WECT,rotation error,+5°,seed,14,0.30848329048843187
+WECT,rotation error,+5°,seed,15,0.3213367609254499
+WECT,rotation error,+5°,seed,16,0.31748071979434445
+WECT,rotation error,+5°,seed,17,0.30077120822622105
+WECT,rotation error,+5°,seed,18,0.3046272493573265
+WECT,rotation error,+5°,seed,19,0.2853470437017995
+WECT,rotation error,+5°,spike,0,0.1992516370439663
+WECT,rotation error,+5°,spike,1,0.21047957371225579
+WECT,rotation error,+5°,spike,2,0.17582417582417584
+WECT,rotation error,+5°,spike,3,0.20500927643784786
+WECT,rotation error,+5°,spike,4,0.21226874391431352
+WECT,rotation error,+5°,spike,5,0.2152230971128609
+WECT,rotation error,+5°,spike,6,0.2014453477868112
+WECT,rotation error,+5°,spike,7,0.19763205828779598
+WECT,rotation error,+5°,spike,8,0.20351526364477335
+WECT,rotation error,+5°,spike,9,0.2050587172538392
+WECT,rotation error,+5°,spike,10,0.20365033621517772
+WECT,rotation error,+5°,spike,11,0.19175455417066156
+WECT,rotation error,+5°,spike,12,0.23454545454545456
+WECT,rotation error,+5°,spike,13,0.21585482330468003
+WECT,rotation error,+5°,spike,14,0.21454545454545454
+WECT,rotation error,+5°,spike,15,0.19514563106796118
+WECT,rotation error,+5°,spike,16,0.22926829268292684
+WECT,rotation error,+5°,spike,17,0.207035175879397
+WECT,rotation error,+5°,spike,18,0.19600380589914368
+WECT,rotation error,+5°,spike,19,0.1819047619047619
+WECT,rotation error,+10°,seed,0,0.2570694087403599
+WECT,rotation error,+10°,seed,1,0.2532133676092545
+WECT,rotation error,+10°,seed,2,0.2570694087403599
+WECT,rotation error,+10°,seed,3,0.2609254498714653
+WECT,rotation error,+10°,seed,4,0.2544987146529563
+WECT,rotation error,+10°,seed,5,0.2634961439588689
+WECT,rotation error,+10°,seed,6,0.2609254498714653
+WECT,rotation error,+10°,seed,7,0.24293059125964012
+WECT,rotation error,+10°,seed,8,0.2647814910025707
+WECT,rotation error,+10°,seed,9,0.26735218508997427
+WECT,rotation error,+10°,seed,10,0.2480719794344473
+WECT,rotation error,+10°,seed,11,0.2596401028277635
+WECT,rotation error,+10°,seed,12,0.24293059125964012
+WECT,rotation error,+10°,seed,13,0.2532133676092545
+WECT,rotation error,+10°,seed,14,0.2467866323907455
+WECT,rotation error,+10°,seed,15,0.2403598971722365
+WECT,rotation error,+10°,seed,16,0.25578406169665807
+WECT,rotation error,+10°,seed,17,0.25578406169665807
+WECT,rotation error,+10°,seed,18,0.2365038560411311
+WECT,rotation error,+10°,seed,19,0.2622107969151671
+WECT,rotation error,+10°,spike,0,0.17305893358278765
+WECT,rotation error,+10°,spike,1,0.18650088809946713
+WECT,rotation error,+10°,spike,2,0.14102564102564102
+WECT,rotation error,+10°,spike,3,0.18645640074211503
+WECT,rotation error,+10°,spike,4,0.17039922103213243
+WECT,rotation error,+10°,spike,5,0.17497812773403323
+WECT,rotation error,+10°,spike,6,0.14453477868112014
+WECT,rotation error,+10°,spike,7,0.16757741347905283
+WECT,rotation error,+10°,spike,8,0.1877890841813136
+WECT,rotation error,+10°,spike,9,0.17976513098464317
+WECT,rotation error,+10°,spike,10,0.16042267050912584
+WECT,rotation error,+10°,spike,11,0.16203259827420902
+WECT,rotation error,+10°,spike,12,0.1990909090909091
+WECT,rotation error,+10°,spike,13,0.16905444126074498
+WECT,rotation error,+10°,spike,14,0.18636363636363637
+WECT,rotation error,+10°,spike,15,0.14854368932038836
+WECT,rotation error,+10°,spike,16,0.1746341463414634
+WECT,rotation error,+10°,spike,17,0.18894472361809045
+WECT,rotation error,+10°,spike,18,0.1731684110371075
+WECT,rotation error,+10°,spike,19,0.1523809523809524
+WECT,rotation error,+20°,seed,0,0.15938303341902313
+WECT,rotation error,+20°,seed,1,0.16580976863753213
+WECT,rotation error,+20°,seed,2,0.16709511568123395
+WECT,rotation error,+20°,seed,3,0.16323907455012854
+WECT,rotation error,+20°,seed,4,0.15809768637532134
+WECT,rotation error,+20°,seed,5,0.15552699228791775
+WECT,rotation error,+20°,seed,6,0.16709511568123395
+WECT,rotation error,+20°,seed,7,0.17095115681233933
+WECT,rotation error,+20°,seed,8,0.16966580976863754
+WECT,rotation error,+20°,seed,9,0.19408740359897173
+WECT,rotation error,+20°,seed,10,0.17352185089974292
+WECT,rotation error,+20°,seed,11,0.19665809768637532
+WECT,rotation error,+20°,seed,12,0.16066838046272494
+WECT,rotation error,+20°,seed,13,0.15681233933161953
+WECT,rotation error,+20°,seed,14,0.19023136246786632
+WECT,rotation error,+20°,seed,15,0.15938303341902313
+WECT,rotation error,+20°,seed,16,0.14395886889460155
+WECT,rotation error,+20°,seed,17,0.18123393316195371
+WECT,rotation error,+20°,seed,18,0.16709511568123395
+WECT,rotation error,+20°,seed,19,0.16580976863753213
+WECT,rotation error,+20°,spike,0,0.13283442469597756
+WECT,rotation error,+20°,spike,1,0.11900532859680284
+WECT,rotation error,+20°,spike,2,0.10622710622710622
+WECT,rotation error,+20°,spike,3,0.13636363636363635
+WECT,rotation error,+20°,spike,4,0.12366114897760468
+WECT,rotation error,+20°,spike,5,0.13823272090988625
+WECT,rotation error,+20°,spike,6,0.11472448057813911
+WECT,rotation error,+20°,spike,7,0.13114754098360656
+WECT,rotation error,+20°,spike,8,0.13783533765032377
+WECT,rotation error,+20°,spike,9,0.14363143631436315
+WECT,rotation error,+20°,spike,10,0.12199807877041306
+WECT,rotation error,+20°,spike,11,0.11888782358581017
+WECT,rotation error,+20°,spike,12,0.14181818181818182
+WECT,rotation error,+20°,spike,13,0.1318051575931232
+WECT,rotation error,+20°,spike,14,0.13272727272727272
+WECT,rotation error,+20°,spike,15,0.129126213592233
+WECT,rotation error,+20°,spike,16,0.12585365853658537
+WECT,rotation error,+20°,spike,17,0.1306532663316583
+WECT,rotation error,+20°,spike,18,0.12844909609895339
+WECT,rotation error,+20°,spike,19,0.1
+WECT,rotation error,+90°,seed,0,0.12467866323907455
+WECT,rotation error,+90°,seed,1,0.09897172236503857
+WECT,rotation error,+90°,seed,2,0.09768637532133675
+WECT,rotation error,+90°,seed,3,0.10539845758354756
+WECT,rotation error,+90°,seed,4,0.09897172236503857
+WECT,rotation error,+90°,seed,5,0.10025706940874037
+WECT,rotation error,+90°,seed,6,0.10154241645244216
+WECT,rotation error,+90°,seed,7,0.10154241645244216
+WECT,rotation error,+90°,seed,8,0.10411311053984576
+WECT,rotation error,+90°,seed,9,0.09897172236503857
+WECT,rotation error,+90°,seed,10,0.10154241645244216
+WECT,rotation error,+90°,seed,11,0.12082262210796915
+WECT,rotation error,+90°,seed,12,0.08483290488431877
+WECT,rotation error,+90°,seed,13,0.09768637532133675
+WECT,rotation error,+90°,seed,14,0.10539845758354756
+WECT,rotation error,+90°,seed,15,0.10025706940874037
+WECT,rotation error,+90°,seed,16,0.10539845758354756
+WECT,rotation error,+90°,seed,17,0.09254498714652956
+WECT,rotation error,+90°,seed,18,0.11053984575835475
+WECT,rotation error,+90°,seed,19,0.11953727506426735
+WECT,rotation error,+90°,spike,0,0.08699719363891488
+WECT,rotation error,+90°,spike,1,0.10301953818827708
+WECT,rotation error,+90°,spike,2,0.09340659340659341
+WECT,rotation error,+90°,spike,3,0.08812615955473098
+WECT,rotation error,+90°,spike,4,0.08471275559883155
+WECT,rotation error,+90°,spike,5,0.0778652668416448
+WECT,rotation error,+90°,spike,6,0.10659439927732611
+WECT,rotation error,+90°,spike,7,0.0883424408014572
+WECT,rotation error,+90°,spike,8,0.10545790934320073
+WECT,rotation error,+90°,spike,9,0.08130081300813008
+WECT,rotation error,+90°,spike,10,0.09798270893371758
+WECT,rotation error,+90°,spike,11,0.09108341323106424
+WECT,rotation error,+90°,spike,12,0.08818181818181818
+WECT,rotation error,+90°,spike,13,0.07927411652340019
+WECT,rotation error,+90°,spike,14,0.09636363636363636
+WECT,rotation error,+90°,spike,15,0.08058252427184466
+WECT,rotation error,+90°,spike,16,0.11219512195121951
+WECT,rotation error,+90°,spike,17,0.08944723618090453
+WECT,rotation error,+90°,spike,18,0.10085632730732635
+WECT,rotation error,+90°,spike,19,0.09142857142857143
+WECT,PCA flip-flop,width/thickness swap,seed,0,0.36632390745501286
+WECT,PCA flip-flop,width/thickness swap,seed,1,0.37017994858611825
+WECT,PCA flip-flop,width/thickness swap,seed,2,0.36889460154241643
+WECT,PCA flip-flop,width/thickness swap,seed,3,0.36503856041131105
+WECT,PCA flip-flop,width/thickness swap,seed,4,0.35218508997429304
+WECT,PCA flip-flop,width/thickness swap,seed,5,0.36503856041131105
+WECT,PCA flip-flop,width/thickness swap,seed,6,0.3676092544987147
+WECT,PCA flip-flop,width/thickness swap,seed,7,0.3226221079691517
+WECT,PCA flip-flop,width/thickness swap,seed,8,0.36118251928020567
+WECT,PCA flip-flop,width/thickness swap,seed,9,0.37017994858611825
+WECT,PCA flip-flop,width/thickness swap,seed,10,0.36632390745501286
+WECT,PCA flip-flop,width/thickness swap,seed,11,0.37660668380462725
+WECT,PCA flip-flop,width/thickness swap,seed,12,0.36889460154241643
+WECT,PCA flip-flop,width/thickness swap,seed,13,0.36632390745501286
+WECT,PCA flip-flop,width/thickness swap,seed,14,0.37017994858611825
+WECT,PCA flip-flop,width/thickness swap,seed,15,0.35732647814910024
+WECT,PCA flip-flop,width/thickness swap,seed,16,0.3508997429305913
+WECT,PCA flip-flop,width/thickness swap,seed,17,0.35347043701799485
+WECT,PCA flip-flop,width/thickness swap,seed,18,0.35475578406169667
+WECT,PCA flip-flop,width/thickness swap,seed,19,0.3560411311053985
+WECT,PCA flip-flop,width/thickness swap,spike,0,0.21515434985968196
+WECT,PCA flip-flop,width/thickness swap,spike,1,0.25133214920071045
+WECT,PCA flip-flop,width/thickness swap,spike,2,0.19230769230769232
+WECT,PCA flip-flop,width/thickness swap,spike,3,0.2300556586270872
+WECT,PCA flip-flop,width/thickness swap,spike,4,0.25316455696202533
+WECT,PCA flip-flop,width/thickness swap,spike,5,0.2335958005249344
+WECT,PCA flip-flop,width/thickness swap,spike,6,0.1951219512195122
+WECT,PCA flip-flop,width/thickness swap,spike,7,0.22859744990892533
+WECT,PCA flip-flop,width/thickness swap,spike,8,0.22664199814986125
+WECT,PCA flip-flop,width/thickness swap,spike,9,0.2104787714543812
+WECT,PCA flip-flop,width/thickness swap,spike,10,0.1978866474543708
+WECT,PCA flip-flop,width/thickness swap,spike,11,0.2722914669223394
+WECT,PCA flip-flop,width/thickness swap,spike,12,0.2672727272727273
+WECT,PCA flip-flop,width/thickness swap,spike,13,0.23686723973256923
+WECT,PCA flip-flop,width/thickness swap,spike,14,0.24727272727272728
+WECT,PCA flip-flop,width/thickness swap,spike,15,0.19611650485436893
+WECT,PCA flip-flop,width/thickness swap,spike,16,0.25170731707317073
+WECT,PCA flip-flop,width/thickness swap,spike,17,0.2522613065326633
+WECT,PCA flip-flop,width/thickness swap,spike,18,0.219790675547098
+WECT,PCA flip-flop,width/thickness swap,spike,19,0.19714285714285715
+WECT,PCA flip-flop,axis sign flips,seed,0,0.2660668380462725
+WECT,PCA flip-flop,axis sign flips,seed,1,0.26735218508997427
+WECT,PCA flip-flop,axis sign flips,seed,2,0.2750642673521851
+WECT,PCA flip-flop,axis sign flips,seed,3,0.2634961439588689
+WECT,PCA flip-flop,axis sign flips,seed,4,0.2609254498714653
+WECT,PCA flip-flop,axis sign flips,seed,5,0.2609254498714653
+WECT,PCA flip-flop,axis sign flips,seed,6,0.27249357326478146
+WECT,PCA flip-flop,axis sign flips,seed,7,0.2570694087403599
+WECT,PCA flip-flop,axis sign flips,seed,8,0.2634961439588689
+WECT,PCA flip-flop,axis sign flips,seed,9,0.2609254498714653
+WECT,PCA flip-flop,axis sign flips,seed,10,0.2596401028277635
+WECT,PCA flip-flop,axis sign flips,seed,11,0.2506426735218509
+WECT,PCA flip-flop,axis sign flips,seed,12,0.2570694087403599
+WECT,PCA flip-flop,axis sign flips,seed,13,0.2750642673521851
+WECT,PCA flip-flop,axis sign flips,seed,14,0.2776349614395887
+WECT,PCA flip-flop,axis sign flips,seed,15,0.2403598971722365
+WECT,PCA flip-flop,axis sign flips,seed,16,0.2583547557840617
+WECT,PCA flip-flop,axis sign flips,seed,17,0.2622107969151671
+WECT,PCA flip-flop,axis sign flips,seed,18,0.2686375321336761
+WECT,PCA flip-flop,axis sign flips,seed,19,0.2699228791773779
+WECT,PCA flip-flop,axis sign flips,spike,0,0.17773620205799812
+WECT,PCA flip-flop,axis sign flips,spike,1,0.1980461811722913
+WECT,PCA flip-flop,axis sign flips,spike,2,0.16483516483516483
+WECT,PCA flip-flop,axis sign flips,spike,3,0.17625231910946196
+WECT,PCA flip-flop,axis sign flips,spike,4,0.1937682570593963
+WECT,PCA flip-flop,axis sign flips,spike,5,0.17672790901137359
+WECT,PCA flip-flop,axis sign flips,spike,6,0.18699186991869918
+WECT,PCA flip-flop,axis sign flips,spike,7,0.1848816029143898
+WECT,PCA flip-flop,axis sign flips,spike,8,0.1933395004625347
+WECT,PCA flip-flop,axis sign flips,spike,9,0.15537488708220415
+WECT,PCA flip-flop,axis sign flips,spike,10,0.17195004803073968
+WECT,PCA flip-flop,axis sign flips,spike,11,0.16970278044103548
+WECT,PCA flip-flop,axis sign flips,spike,12,0.19272727272727272
+WECT,PCA flip-flop,axis sign flips,spike,13,0.17382999044890163
+WECT,PCA flip-flop,axis sign flips,spike,14,0.1781818181818182
+WECT,PCA flip-flop,axis sign flips,spike,15,0.18058252427184465
+WECT,PCA flip-flop,axis sign flips,spike,16,0.20390243902439023
+WECT,PCA flip-flop,axis sign flips,spike,17,0.19095477386934673
+WECT,PCA flip-flop,axis sign flips,spike,18,0.18173168411037108
+WECT,PCA flip-flop,axis sign flips,spike,19,0.18285714285714286
+WECT,PCA flip-flop,swap + sign flips,seed,0,0.2159383033419023
+WECT,PCA flip-flop,swap + sign flips,seed,1,0.20565552699228792
+WECT,PCA flip-flop,swap + sign flips,seed,2,0.20565552699228792
+WECT,PCA flip-flop,swap + sign flips,seed,3,0.20308483290488433
+WECT,PCA flip-flop,swap + sign flips,seed,4,0.2249357326478149
+WECT,PCA flip-flop,swap + sign flips,seed,5,0.2365038560411311
+WECT,PCA flip-flop,swap + sign flips,seed,6,0.2236503856041131
+WECT,PCA flip-flop,swap + sign flips,seed,7,0.1928020565552699
+WECT,PCA flip-flop,swap + sign flips,seed,8,0.20565552699228792
+WECT,PCA flip-flop,swap + sign flips,seed,9,0.20565552699228792
+WECT,PCA flip-flop,swap + sign flips,seed,10,0.19023136246786632
+WECT,PCA flip-flop,swap + sign flips,seed,11,0.2069408740359897
+WECT,PCA flip-flop,swap + sign flips,seed,12,0.2210796915167095
+WECT,PCA flip-flop,swap + sign flips,seed,13,0.21465295629820053
+WECT,PCA flip-flop,swap + sign flips,seed,14,0.21979434447300772
+WECT,PCA flip-flop,swap + sign flips,seed,15,0.2095115681233933
+WECT,PCA flip-flop,swap + sign flips,seed,16,0.2236503856041131
+WECT,PCA flip-flop,swap + sign flips,seed,17,0.2159383033419023
+WECT,PCA flip-flop,swap + sign flips,seed,18,0.19408740359897173
+WECT,PCA flip-flop,swap + sign flips,seed,19,0.19023136246786632
+WECT,PCA flip-flop,swap + sign flips,spike,0,0.1449953227315248
+WECT,PCA flip-flop,swap + sign flips,spike,1,0.16074600355239788
+WECT,PCA flip-flop,swap + sign flips,spike,2,0.13095238095238096
+WECT,PCA flip-flop,swap + sign flips,spike,3,0.16326530612244897
+WECT,PCA flip-flop,swap + sign flips,spike,4,0.1694255111976631
+WECT,PCA flip-flop,swap + sign flips,spike,5,0.14610673665791776
+WECT,PCA flip-flop,swap + sign flips,spike,6,0.15266485998193316
+WECT,PCA flip-flop,swap + sign flips,spike,7,0.15209471766848817
+WECT,PCA flip-flop,swap + sign flips,spike,8,0.1757631822386679
+WECT,PCA flip-flop,swap + sign flips,spike,9,0.15085817524841916
+WECT,PCA flip-flop,swap + sign flips,spike,10,0.14217098943323728
+WECT,PCA flip-flop,swap + sign flips,spike,11,0.15627996164908917
+WECT,PCA flip-flop,swap + sign flips,spike,12,0.16272727272727272
+WECT,PCA flip-flop,swap + sign flips,spike,13,0.15090735434574976
+WECT,PCA flip-flop,swap + sign flips,spike,14,0.15818181818181817
+WECT,PCA flip-flop,swap + sign flips,spike,15,0.14271844660194175
+WECT,PCA flip-flop,swap + sign flips,spike,16,0.1746341463414634
+WECT,PCA flip-flop,swap + sign flips,spike,17,0.16984924623115577
+WECT,PCA flip-flop,swap + sign flips,spike,18,0.16745956232159848
+WECT,PCA flip-flop,swap + sign flips,spike,19,0.13714285714285715
+WECT,no hand-built frame,automatic PCA,seed,0,0.35861182519280205
+WECT,no hand-built frame,automatic PCA,seed,1,0.34832904884318766
+WECT,no hand-built frame,automatic PCA,seed,2,0.35475578406169667
+WECT,no hand-built frame,automatic PCA,seed,3,0.3508997429305913
+WECT,no hand-built frame,automatic PCA,seed,4,0.34061696658097684
+WECT,no hand-built frame,automatic PCA,seed,5,0.33161953727506427
+WECT,no hand-built frame,automatic PCA,seed,6,0.36632390745501286
+WECT,no hand-built frame,automatic PCA,seed,7,0.3277634961439589
+WECT,no hand-built frame,automatic PCA,seed,8,0.33547557840616965
+WECT,no hand-built frame,automatic PCA,seed,9,0.3508997429305913
+WECT,no hand-built frame,automatic PCA,seed,10,0.33161953727506427
+WECT,no hand-built frame,automatic PCA,seed,11,0.3496143958868895
+WECT,no hand-built frame,automatic PCA,seed,12,0.3496143958868895
+WECT,no hand-built frame,automatic PCA,seed,13,0.3496143958868895
+WECT,no hand-built frame,automatic PCA,seed,14,0.3508997429305913
+WECT,no hand-built frame,automatic PCA,seed,15,0.33676092544987146
+WECT,no hand-built frame,automatic PCA,seed,16,0.32005141388174807
+WECT,no hand-built frame,automatic PCA,seed,17,0.36503856041131105
+WECT,no hand-built frame,automatic PCA,seed,18,0.36503856041131105
+WECT,no hand-built frame,automatic PCA,seed,19,0.34704370179948585
+WECT,no hand-built frame,automatic PCA,spike,0,0.1833489242282507
+WECT,no hand-built frame,automatic PCA,spike,1,0.2113676731793961
+WECT,no hand-built frame,automatic PCA,spike,2,0.1804029304029304
+WECT,no hand-built frame,automatic PCA,spike,3,0.2077922077922078
+WECT,no hand-built frame,automatic PCA,spike,4,0.23466407010710807
+WECT,no hand-built frame,automatic PCA,spike,5,0.20822397200349957
+WECT,no hand-built frame,automatic PCA,spike,6,0.1987353206865402
+WECT,no hand-built frame,automatic PCA,spike,7,0.1994535519125683
+WECT,no hand-built frame,automatic PCA,spike,8,0.20351526364477335
+WECT,no hand-built frame,automatic PCA,spike,9,0.18247515808491419
+WECT,no hand-built frame,automatic PCA,spike,10,0.21613832853025935
+WECT,no hand-built frame,automatic PCA,spike,11,0.20038350910834132
+WECT,no hand-built frame,automatic PCA,spike,12,0.23727272727272727
+WECT,no hand-built frame,automatic PCA,spike,13,0.21967526265520534
+WECT,no hand-built frame,automatic PCA,spike,14,0.23363636363636364
+WECT,no hand-built frame,automatic PCA,spike,15,0.1970873786407767
+WECT,no hand-built frame,automatic PCA,spike,16,0.23121951219512196
+WECT,no hand-built frame,automatic PCA,spike,17,0.22613065326633167
+WECT,no hand-built frame,automatic PCA,spike,18,0.19790675547098002
+WECT,no hand-built frame,automatic PCA,spike,19,0.18285714285714286
+WECT,no hand-built frame,scanner,seed,0,0.2994858611825193
+WECT,no hand-built frame,scanner,seed,1,0.3226221079691517
+WECT,no hand-built frame,scanner,seed,2,0.34704370179948585
+WECT,no hand-built frame,scanner,seed,3,0.34575835475578404
+WECT,no hand-built frame,scanner,seed,4,0.2943444730077121
+WECT,no hand-built frame,scanner,seed,5,0.32519280205655526
+WECT,no hand-built frame,scanner,seed,6,0.3277634961439589
+WECT,no hand-built frame,scanner,seed,7,0.30077120822622105
+WECT,no hand-built frame,scanner,seed,8,0.3380462724935733
+WECT,no hand-built frame,scanner,seed,9,0.31362467866323906
+WECT,no hand-built frame,scanner,seed,10,0.3444730077120823
+WECT,no hand-built frame,scanner,seed,11,0.3110539845758355
+WECT,no hand-built frame,scanner,seed,12,0.3341902313624679
+WECT,no hand-built frame,scanner,seed,13,0.3213367609254499
+WECT,no hand-built frame,scanner,seed,14,0.3097686375321337
+WECT,no hand-built frame,scanner,seed,15,0.32904884318766064
+WECT,no hand-built frame,scanner,seed,16,0.3149100257069409
+WECT,no hand-built frame,scanner,seed,17,0.3161953727506427
+WECT,no hand-built frame,scanner,seed,18,0.2994858611825193
+WECT,no hand-built frame,scanner,seed,19,0.31748071979434445
+WECT,no hand-built frame,scanner,spike,0,0.13938260056127222
+WECT,no hand-built frame,scanner,spike,1,0.0994671403197158
+WECT,no hand-built frame,scanner,spike,2,0.11172161172161173
+WECT,no hand-built frame,scanner,spike,3,0.12337662337662338
+WECT,no hand-built frame,scanner,spike,4,0.13242453748782862
+WECT,no hand-built frame,scanner,spike,5,0.1137357830271216
+WECT,no hand-built frame,scanner,spike,6,0.1102077687443541
+WECT,no hand-built frame,scanner,spike,7,0.1320582877959927
+WECT,no hand-built frame,scanner,spike,8,0.12025901942645699
+WECT,no hand-built frame,scanner,spike,9,0.12556458897922312
+WECT,no hand-built frame,scanner,spike,10,0.12584053794428435
+WECT,no hand-built frame,scanner,spike,11,0.11601150527325024
+WECT,no hand-built frame,scanner,spike,12,0.1190909090909091
+WECT,no hand-built frame,scanner,spike,13,0.12989493791786055
+WECT,no hand-built frame,scanner,spike,14,0.1318181818181818
+WECT,no hand-built frame,scanner,spike,15,0.12135922330097088
+WECT,no hand-built frame,scanner,spike,16,0.1278048780487805
+WECT,no hand-built frame,scanner,spike,17,0.12763819095477386
+WECT,no hand-built frame,scanner,spike,18,0.12464319695528069
+WECT,no hand-built frame,scanner,spike,19,0.11238095238095239
+WECT,no hand-built frame,random rotation,seed,0,0.10796915167095116
+WECT,no hand-built frame,random rotation,seed,1,0.11182519280205655
+WECT,no hand-built frame,random rotation,seed,2,0.11696658097686376
+WECT,no hand-built frame,random rotation,seed,3,0.11311053984575835
+WECT,no hand-built frame,random rotation,seed,4,0.09768637532133675
+WECT,no hand-built frame,random rotation,seed,5,0.11311053984575835
+WECT,no hand-built frame,random rotation,seed,6,0.10025706940874037
+WECT,no hand-built frame,random rotation,seed,7,0.10668380462724936
+WECT,no hand-built frame,random rotation,seed,8,0.10411311053984576
+WECT,no hand-built frame,random rotation,seed,9,0.08740359897172237
+WECT,no hand-built frame,random rotation,seed,10,0.10539845758354756
+WECT,no hand-built frame,random rotation,seed,11,0.10668380462724936
+WECT,no hand-built frame,random rotation,seed,12,0.11568123393316196
+WECT,no hand-built frame,random rotation,seed,13,0.10025706940874037
+WECT,no hand-built frame,random rotation,seed,14,0.12082262210796915
+WECT,no hand-built frame,random rotation,seed,15,0.09768637532133675
+WECT,no hand-built frame,random rotation,seed,16,0.10025706940874037
+WECT,no hand-built frame,random rotation,seed,17,0.10411311053984576
+WECT,no hand-built frame,random rotation,seed,18,0.09511568123393316
+WECT,no hand-built frame,random rotation,seed,19,0.08611825192802057
+WECT,no hand-built frame,random rotation,spike,0,0.0813844714686623
+WECT,no hand-built frame,random rotation,spike,1,0.08259325044404973
+WECT,no hand-built frame,random rotation,spike,2,0.076007326007326
+WECT,no hand-built frame,random rotation,spike,3,0.09461966604823747
+WECT,no hand-built frame,random rotation,spike,4,0.09250243427458617
+WECT,no hand-built frame,random rotation,spike,5,0.08748906386701662
+WECT,no hand-built frame,random rotation,spike,6,0.07859078590785908
+WECT,no hand-built frame,random rotation,spike,7,0.09016393442622951
+WECT,no hand-built frame,random rotation,spike,8,0.08973172987974098
+WECT,no hand-built frame,random rotation,spike,9,0.0939476061427281
+WECT,no hand-built frame,random rotation,spike,10,0.07780979827089338
+WECT,no hand-built frame,random rotation,spike,11,0.08437200383509108
+WECT,no hand-built frame,random rotation,spike,12,0.09272727272727273
+WECT,no hand-built frame,random rotation,spike,13,0.09837631327602674
+WECT,no hand-built frame,random rotation,spike,14,0.09454545454545454
+WECT,no hand-built frame,random rotation,spike,15,0.09029126213592233
+WECT,no hand-built frame,random rotation,spike,16,0.08195121951219513
+WECT,no hand-built frame,random rotation,spike,17,0.10050251256281408
+WECT,no hand-built frame,random rotation,spike,18,0.08658420551855375
+WECT,no hand-built frame,random rotation,spike,19,0.07142857142857142

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 from typing import Dict, List, Sequence, Tuple
 
@@ -10,6 +11,11 @@ import torchvision.transforms.functional as TF
 from PIL import Image, ImageDraw
 from pyect import WECT, sample_directions_2d, weighted_cubical
 from scipy.ndimage import convolve
+
+_SRC = Path(__file__).resolve().parent.parent / "src"
+if str(_SRC) not in sys.path:
+    sys.path.insert(0, str(_SRC))
+from diwect import DIWECT  # noqa: E402
 
 # --------------------------------------------------------------------------- #
 # Paths
@@ -28,7 +34,7 @@ def figure_dir(name: str) -> Path:
 
 
 # --------------------------------------------------------------------------- #
-# Plot style: the WECT is always red and the DIWECT always blue
+# Plot styles and display attributes
 # --------------------------------------------------------------------------- #
 
 COLORS: Dict[str, str] = {
@@ -118,10 +124,10 @@ def save_pdf(fig, folder: str, stem: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
-# EAS2D: five asymmetric polygons rasterized to exactly the same pixel area
+# EAS2D dataset
 # --------------------------------------------------------------------------- #
 
-# Polygons in a centered frame (x right, y up), before area matching.
+# Polygons in a centered frame (x right, y up) before area matching
 SHAPE_POLYGONS: Dict[str, List[Tuple[float, float]]] = {
     "bar": [(-26, -4), (26, -4), (26, 4), (-26, 4)],                         # rod
     "ell": [(-5, -18), (3, -18), (3, 10), (16, 10), (16, 18), (-5, 18)],     # L
@@ -173,29 +179,39 @@ def rotate_image(img: np.ndarray, angle_deg: float) -> np.ndarray:
 
 
 # --------------------------------------------------------------------------- #
-# WECT of an image (pyECT), and the DIWECT as its mean over directions
+# WECT of an image (pyECT), and the exact DIWECT (src/diwect.py)
 # --------------------------------------------------------------------------- #
 
 
 class WECTTransform:
-    """pyECT's WECT of a 2D image's weighted cubical complex"""
+    """pyECT's WECT and the exact DIWECT of a 2D image's weighted cubical complex"""
 
     def __init__(self, num_dirs: int = 64, num_heights: int = 64) -> None:
         self.dirs = sample_directions_2d(num_dirs)
         self.num_dirs = num_dirs
         self.num_heights = int(num_heights)
         self._module = WECT(self.dirs, self.num_heights)
+        self._diwect = DIWECT(self.num_heights, normalize=True)
+
+    @staticmethod
+    def _complex(image):
+        return weighted_cubical(torch.as_tensor(np.asarray(image), dtype=torch.float32))
 
     def _matrix(self, image) -> torch.Tensor:
-        img = torch.as_tensor(np.asarray(image), dtype=torch.float32)
         with torch.no_grad():
-            return self._module(weighted_cubical(img))
+            return self._module(self._complex(image))
 
     def wect(self, image) -> np.ndarray:
         return self._matrix(image).cpu().numpy()                 # (D, H)
 
-    def diwect(self, image) -> np.ndarray:
+    def averaged_wect(self, image) -> np.ndarray:
+        """Mean of the WECT over the ``num_dirs`` sampled directions (an approximation)."""
         return self._matrix(image).mean(dim=0).cpu().numpy()     # (H,)
+
+    def diwect(self, image) -> np.ndarray:
+        """The exact DIWECT (no direction sampling)."""
+        with torch.no_grad():
+            return self._diwect(self._complex(image)).cpu().numpy()   # (H,)
 
 
 def median_gamma(sqdists: np.ndarray) -> float:
