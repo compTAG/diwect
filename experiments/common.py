@@ -1,9 +1,3 @@
-"""Shared code for the synthetic experiments (Figures 1-3): paths, plot style,
-the Equal Area Shapes 2D (EAS2D) dataset, and a thin wrapper around pyECT's WECT.
-
-Everything a notebook in this directory reads or writes lives under ``ROOT``
-(this directory): ``data/`` for inputs and caches, ``figures/`` for outputs.
-"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -85,8 +79,6 @@ def box_plot(ax, samples, positions, colors, width=0.6, alpha=1.0, vert=True, po
     for patch, med, c, vals in zip(bp["boxes"], bp["medians"], colors, samples):
         rgba = mpl.colors.to_rgba(c, alpha)
         patch.set_facecolor(rgba)
-        # the median must stay visible on its fill: white on dark fills, ink on light ones;
-        # a box too thin to show fill around a white line keeps the ink median
         r, g, b = (alpha * np.array(rgba[:3]) + (1 - alpha))   # composited on white
         q1, q3 = np.percentile(vals, [25, 75])
         if 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.38 and (q3 - q1) > 0.03 * span:
@@ -129,7 +121,7 @@ def save_pdf(fig, folder: str, stem: str) -> None:
 # EAS2D: five asymmetric polygons rasterized to exactly the same pixel area
 # --------------------------------------------------------------------------- #
 
-# Polygons in a centred frame (x right, y up), before area matching.
+# Polygons in a centered frame (x right, y up), before area matching.
 SHAPE_POLYGONS: Dict[str, List[Tuple[float, float]]] = {
     "bar": [(-26, -4), (26, -4), (26, 4), (-26, 4)],                         # rod
     "ell": [(-5, -18), (3, -18), (3, 10), (16, 10), (16, 18), (-5, 18)],     # L
@@ -174,7 +166,7 @@ def make_shape_library(size: int = 64, area: int = 380) -> Dict[str, np.ndarray]
 
 
 def rotate_image(img: np.ndarray, angle_deg: float) -> np.ndarray:
-    """Nearest-neighbour rotation about the image centre (no resampling blur)."""
+    """Nearest-neighbour rotation about the image center (no resampling blur)."""
     t = torch.from_numpy(np.asarray(img, dtype=np.float32)).unsqueeze(0)
     r = TF.rotate(t, float(angle_deg), interpolation=TF.InterpolationMode.NEAREST, expand=False)
     return r.squeeze(0).clamp_min(0.0).numpy()
@@ -186,12 +178,7 @@ def rotate_image(img: np.ndarray, angle_deg: float) -> np.ndarray:
 
 
 class WECTTransform:
-    """pyECT's WECT of a 2D image's weighted cubical complex.
-
-    Directions are pyECT's evenly spaced ``theta_d = 2 pi d / D`` (in order), so a
-    rotation by ``2 pi k / D`` cyclically shifts the direction axis by k rows. The
-    column mean of this matrix (``diwect``) is the direction-averaged WECT.
-    """
+    """pyECT's WECT of a 2D image's weighted cubical complex"""
 
     def __init__(self, num_dirs: int = 64, num_heights: int = 64) -> None:
         self.dirs = sample_directions_2d(num_dirs)

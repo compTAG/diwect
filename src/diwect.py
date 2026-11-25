@@ -10,7 +10,7 @@ Weighted Euler Characteristic Transform.
 We also use notation following the paper:
     N(v)            the normalized vector (Definition 11)
     r_v(t)          the geodesic radius of the cap of v at height t (Definition 13)
-    c = -N(v)       the centre of that cap
+    c = -N(v)       the center of that cap
     B_r(c)          the closed spherical cap (Definition 12)
     A_sigma(t)      the support of sigma at height t (Definition 8)
     S^n_sigma(v)    the vertex witness region of v in sigma (Definition 9)
@@ -341,8 +341,8 @@ def _cap_region_areas(
     amp = torch.hypot(g1, g2)
     phi_v = torch.atan2(g2, g1)
 
-    # hemisphere l restricted to great circle j is the semicircle centred at psi_jl.
-    # Relative to the direction of the cap centre on circle j,
+    # hemisphere l restricted to great circle j is the semicircle centered at psi_jl.
+    # Relative to the direction of the cap center on circle j,
     # the intersection of these semicircles is the interval [lo, hi]
     l_cos = e1 @ normals.transpose(-1, -2)  # (k, d+1, j, l) = e1_j \cdot n_l
     l_sin = e2 @ normals.transpose(-1, -2)
@@ -357,7 +357,7 @@ def _cap_region_areas(
     hi_other = torch.where(other.unsqueeze(2), rel + 0.5 * pi, torch.full_like(rel, math.inf)).amin(dim=-1)
 
     # for cap circle (f1, sign * f2, c), hemisphere j cuts it at an arc
-    # centred at angle p0_j
+    # centered at angle p0_j
     # see Lemma 31
     f1, f2 = _frames(v_hat)
     a_j = (normals * f1.unsqueeze(2)).sum(dim=-1)
@@ -374,7 +374,7 @@ def _cap_region_areas(
     amp_h = amp.unsqueeze(2)
 
     # for great-circle arcs, the cap meets circle j in the interval [-h, h] around
-    # the cap centre's direction (cos(h) = b / amp), intersected with [lo, hi].
+    # the cap center's direction (cos(h) = b / amp), intersected with [lo, hi].
     # see Lemmas 22 and 23
     reaches = (amp_h > tol) & (bb < amp_h)
     half = torch.acos(torch.clamp(bb / torch.where(amp_h > tol, amp_h, torch.ones_like(amp_h)), -1.0, 1.0))

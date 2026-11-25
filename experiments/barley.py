@@ -1,14 +1,3 @@
-"""Shared code for the barley seed experiments (notebooks 04a, 04b, 05a, 06).
-
-Data: the founder seeds of Amezquita et al. (2022), Dryad doi:10.5061/dryad.rxwdbrv93,
-extracted by ``00-data-barley.ipynb`` into ``data/raw/``.
-
-The pose and ECT conventions are re-implemented from the authors' ``demeter`` code
-(https://github.com/amezqui3/demeter): ``misc.rotateSVD`` / ``find_tip`` (pose),
-``euler.CubicalComplex`` (cubical complex) and ``directions.pole_directions`` (the
-158 directions). The cleaning of the binary scans follows demeter's
-``scripts/computing_ecc.py``.
-"""
 from __future__ import annotations
 
 import glob
@@ -43,13 +32,7 @@ TRADITIONAL = ["Length", "Width", "Height", "HeightMax", "Shell", "Area", "Vol",
 
 
 def load_table(with_files: bool = False) -> dict:
-    """The descriptor table of the 3,121 founder seeds.
-
-    Returns accession (the 28 seed types), panicle (the 77 spikes), the 11
-    traditional descriptors, and the published ECT (158 directions x 64
-    thresholds, and its T = 16 subsample). With ``with_files``, also the path of
-    every seed's TIFF scan (which needs the extracted CT scans).
-    """
+    """The descriptor table of the 3,121 founder seeds"""
     table = pd.read_csv(DESCRIPTORS)
     published_ect64 = table.iloc[:, 20:].to_numpy(int)
     out = dict(
@@ -106,7 +89,7 @@ def load_seed(path):
 
 
 def cubical_complex(img):
-    """Voxel-centre cubical complex: vertex coordinates, and edges, squares, cubes as vertex ids."""
+    """Voxel-center cubical complex: vertex coordinates, and edges, squares, cubes as vertex ids."""
     index = -np.ones(np.array(img.shape) + 1, dtype=np.int64)
     coords = np.argwhere(img)
     index[tuple(coords.T)] = np.arange(len(coords))
@@ -124,15 +107,9 @@ def cubical_complex(img):
 
 
 def paper_frame(coords):
-    """demeter's pose: (centroid, R), R's columns the aligned axes (length, width, crease).
-
-    The centred voxel coordinates are rotated by their SVD; the third axis is
-    negated when the seed is wider at the bottom than at the top (the crease
-    convention). demeter's tip test never fires (the tip is a maximum of centred
-    coordinates), so the sign of the length axis is whatever the SVD returns.
-    """
-    centre = coords.mean(0)
-    c = coords - centre
+    """demeter's pose: (centroid, R), R's columns the aligned axes (length, width, crease)"""
+    center = coords.mean(0)
+    c = coords - center
     tip = c[:, 0].max()                           # find_tip(coords, x=2, y=1, z=0)
     _, _, vh = np.linalg.svd(c, full_matrices=False)
     rot = vh.T.copy()
@@ -144,7 +121,7 @@ def paper_frame(coords):
         rot[:, 2] *= -1
     if tip < 0:                                   # never true
         rot[:, 0] *= -1
-    return centre, rot
+    return center, rot
 
 
 def ect_minmax(verts, cells, dirs, T):
@@ -161,12 +138,7 @@ def ect_minmax(verts, cells, dirs, T):
 
 
 def ect_both_binnings(verts, cells, dirs, T):
-    """(min-max ECT, global-grid ECT), each of length len(dirs) * T.
-
-    Min-max: the paper's np.histogram between the direction's min and max.
-    Global: pyECT's grid on [-M, M] (M the largest vertex norm), a cell entering
-    at the first grid height >= its highest vertex.
-    """
+    """(min-max ECT, global-grid ECT), each of length len(dirs) * T"""
     M = np.linalg.norm(verts, axis=1).max()
     minmax, glob_ = [], []
     for d in dirs:
@@ -182,12 +154,7 @@ def ect_both_binnings(verts, cells, dirs, T):
 
 
 def freudenthal(img):
-    """Freudenthal triangulation of the voxel-centre cubical complex (no new vertices).
-
-    Every cube becomes 6 tetrahedra and every square 2 triangles along its
-    monotone diagonal; the result is closed under faces. Returns vertex
-    coordinates and [edges, triangles, tetrahedra] as vertex ids.
-    """
+    """Freudenthal triangulation of the voxel-center cubical complex (no new vertices)"""
     coords = np.argwhere(img)
     index = -np.ones(np.array(img.shape) + 1, dtype=np.int64)
     index[tuple(coords.T)] = np.arange(len(coords))
@@ -210,12 +177,12 @@ def freudenthal(img):
     return coords.astype(float), [np.unique(np.sort(e, 1), axis=0), faces, np.sort(tets, 1)]
 
 
-def mesh(img, centre):
-    """Marching-cubes surface at level 0.5 of the binary image, in voxel units, minus `centre`."""
+def mesh(img, center):
+    """Marching-cubes surface at level 0.5 of the binary image, in voxel units, minus `center`."""
     from skimage import measure
 
     verts, faces, *_ = measure.marching_cubes(np.pad(img, 1).astype(np.float32), 0.5)
-    verts = verts.astype(np.float64) - 1 - centre             # undo the padding
+    verts = verts.astype(np.float64) - 1 - center             # undo the padding
     return verts, faces.astype(np.int64)
 
 
@@ -242,8 +209,8 @@ def surface_frame(verts, faces):
     surface; signs of the first two axes from the third moments, third axis their cross product."""
     tri = verts[faces]
     area = 0.5 * np.linalg.norm(np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0]), axis=1)
-    centre = (area[:, None] * tri.mean(1)).sum(0) / area.sum()
-    t = tri - centre
+    center = (area[:, None] * tri.mean(1)).sum(0) / area.sum()
+    t = tri - center
     s = t.sum(1)
     second = (np.einsum("f,fki,fkj->ij", area, t, t) + np.einsum("f,fi,fj->ij", area, s, s)) / (12 * area.sum())
     variances, axes = np.linalg.eigh(second)
@@ -251,7 +218,7 @@ def surface_frame(verts, faces):
     skew = (area[:, None] * (t.mean(1) @ axes[:, :2]) ** 3).sum(0)
     axes[:, :2] *= np.where(skew < 0, -1.0, 1.0)
     axes[:, 2] = np.cross(axes[:, 0], axes[:, 1])
-    return centre, axes, variances
+    return center, axes, variances
 
 
 def random_rotation(rng):
@@ -304,7 +271,7 @@ def make_splits(accession, panicle, repeats=REPEATS):
 
 
 def block(z):
-    """Centre, and scale to unit mean squared norm, so blocks of any size weigh the same."""
+    """center, and scale to unit mean squared norm, so blocks of any size weigh the same."""
     z = z - z.mean(0)
     return z / np.sqrt((z ** 2).sum(1).mean())
 
