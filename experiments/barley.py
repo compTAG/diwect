@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import glob
 import itertools
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -12,12 +13,15 @@ from scipy import ndimage
 from sklearn.svm import SVC
 
 ROOT = Path(__file__).resolve().parent
+_SRC = ROOT.parent / "src"
+if str(_SRC) not in sys.path:
+    sys.path.insert(0, str(_SRC))
 DATA = ROOT / "data"
 RAW = DATA / "raw"
 CACHE = DATA / "barley"
 SEED_DIR = RAW / "xray" / "xray_ct_scans" / "clean_founders_seeds"
 DESCRIPTORS = RAW / "descriptors" / "shape_descriptors" / "founder_seeds" / "combined_d158_T64.csv"
-UMAP_FILE = (RAW / "dimred" / "dimension_reduction" / "umap"
+UMAP_FILE = (RAW / "dryad" / "dimension_reduction" / "umap"
              / "umap_158_16_50_0.1_12_manhattan_unsupervised.csv")
 
 SEED = 0
@@ -106,22 +110,48 @@ def cubical_complex(img):
     return coords.astype(float), [edges, squares, cubes]
 
 
-def paper_frame(coords):
-    """demeter's pose: (centroid, R), R's columns the aligned axes (length, width, crease)"""
-    center = coords.mean(0)
-    c = coords - center
-    tip = c[:, 0].max()                           # find_tip(coords, x=2, y=1, z=0)
-    _, _, vh = np.linalg.svd(c, full_matrices=False)
-    rot = vh.T.copy()
+def _orient_crease(c, rot):
+    """demeter's sign rule for the third axis (in place): compare the width of the
+    seed at the top and the bottom of the crease axis."""
     s = c @ rot
     pos, neg = s[s[:, 1] > 0], s[s[:, 1] < 0]
     top = pos[pos[:, 2] == pos[:, 2].max()][0, 1] - neg[neg[:, 2] == neg[:, 2].max()][0, 1]
     bottom = pos[pos[:, 2] == pos[:, 2].min()][0, 1] - neg[neg[:, 2] == neg[:, 2].min()][0, 1]
     if bottom > top:
         rot[:, 2] *= -1
-    if tip < 0:                                   # never true
-        rot[:, 0] *= -1
-    return center, rot
+
+
+def paper_frame_candidates(coords):
+    center = coords.mean(0)
+    c = coords - center
+    _, _, vh = np.linalg.svd(c, full_matrices=False)
+    candidates = []
+    for s0, s1 in [(1, 1), (1, -1), (-1, 1), (-1, -1)]:
+        rot = vh.T * np.array([s0, s1, 1.0])
+        _orient_crease(c, rot)
+        candidates.append(rot)
+    return center, candidates
+
+
+def paper_frame(coords):
+    """demeter's pose: (centroid, R), R's columns the aligned axes (length, width, crease)"""
+    center, candidates = paper_frame_candidates(coords)
+    return center, candidates[0]
+
+
+def matched_paper_frame(coords, cells, published_ect64):
+    """The paper's pose, independent of the LAPACK library: (centroid, R, L1 distance)"""
+    center, candidates = paper_frame_candidates(coords)
+    dists = []
+    for rot in candidates:   # this machine's signs first, so usually one ECT suffices
+        dists.append(int(np.abs(ect_minmax((coords - center) @ rot, cells, DIRECTIONS, 64) - published_ect64).sum()))
+        if dists[-1] == 0:
+            return center, rot, 0
+    for rot, dist in zip(candidates, dists):
+        lead = rot[np.abs(rot[:, :2]).argmax(0), [0, 1]]
+        if (lead > 0).all():
+            return center, rot, dist
+    raise AssertionError("no candidate satisfies the fallback sign rule")
 
 
 def ect_minmax(verts, cells, dirs, T):
