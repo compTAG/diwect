@@ -21,7 +21,7 @@ RAW = DATA / "raw"
 CACHE = DATA / "barley"
 SEED_DIR = RAW / "xray" / "xray_ct_scans" / "clean_founders_seeds"
 DESCRIPTORS = RAW / "descriptors" / "shape_descriptors" / "founder_seeds" / "combined_d158_T64.csv"
-UMAP_FILE = (RAW / "dryad" / "dimension_reduction" / "umap"
+UMAP_FILE = (RAW / "dimred" / "dimension_reduction" / "umap"
              / "umap_158_16_50_0.1_12_manhattan_unsupervised.csv")
 
 SEED = 0
